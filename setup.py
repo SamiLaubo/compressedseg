@@ -26,7 +26,6 @@ else:
   ]
 
 setuptools.setup(
-  setup_requires=['numpy', 'pbr','cython'],
   ext_modules=[
     setuptools.Extension(
         'compressed_segmentation',
