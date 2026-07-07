@@ -256,6 +256,7 @@ def labels(
   ###
 
   ### With
+  print("Using Sami compressed sensing")
   concatenated_data = np.concatenate([ 
     data[index[idx,0]:index[idx,1]]
     for idx in range(num_headers) 
