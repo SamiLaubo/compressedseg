@@ -248,10 +248,24 @@ def labels(
   encoded = encoded[4:] # skip the channel length
   cdef np.ndarray[uint32_t] data = np.frombuffer(encoded, dtype=np.uint32)
 
-  labels = np.concatenate([ 
+  ### Replace this
+  # labels = np.concatenate([ 
+  #   data[index[idx,0]:index[idx,1]]
+  #   for idx in range(num_headers) 
+  # ]).view(dtype)
+  ###
+
+  ### With
+  concatenated_data = np.concatenate([ 
     data[index[idx,0]:index[idx,1]]
     for idx in range(num_headers) 
-  ]).view(dtype)
+  ])
+
+  if dtype == np.uint64 and concatenated_data.size % 2 != 0:
+      concatenated_data = np.append(concatenated_data, [0])
+  
+  labels = concatenated_data.view(dtype)
+  ###
 
   return np.unique(labels)
 
